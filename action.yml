@@ -1,0 +1,39 @@
+name: Scan Docker Tags
+description: Scan a Docker repository for recently-updated tags
+inputs:
+  image:
+    description: The Docker image to scan (sans tag), e.g. "mhart/alpine-node"
+    required: true
+  username:
+    description: The username used to authenticate against the Docker repository
+    required: true
+  password:
+    description: The password used to authenticate against the Docker repository
+    required: true
+  tag-regex:
+    description: >
+      An optional regular expression for filtering tags. Backslashes need to be escaped. E.g. `\\d+\\.\\d+$` matches 
+      semver, `latest` matches only the "latest" tag
+    required: false
+    default: '*'
+  max-age-minutes:
+    description: The maximum age of tags in minutes. Older tags are discarded. Defaults to 30 minutes
+    required: false
+    default: '30'
+  repo-url:
+    description: The URL of the Docker registry. Defaults to Dockerhub (https://hub.docker.com)
+    required: false
+    default: https://hub.docker.com
+  output-delimiter:
+    description: The delimiter to use for the output. Defaults to " " (space)
+    required: false
+    default: ' '
+outputs:
+  tags:
+    description: A list of all image tags that have changed in the specified time frame
+runs:
+  using: node12
+  main: index.js
+branding:
+  icon: rotate-cw
+  color: yellow

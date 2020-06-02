@@ -15,7 +15,7 @@ inputs:
       An optional regular expression for filtering tags. Backslashes need to be escaped. E.g. `\\d+\\.\\d+$` matches 
       semver, `latest` matches only the "latest" tag
     required: false
-    default: '*'
+    default: '.*'
   max-age-minutes:
     description: The maximum age of tags in minutes. Older tags are discarded. Defaults to 30 minutes
     required: false

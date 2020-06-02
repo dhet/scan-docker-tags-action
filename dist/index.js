@@ -106,7 +106,7 @@ fetch(`${repoUrl}/v2/users/login/`, {
 .then(processResponse)
 .then(({ results }) => {
   const tags = 
-    results.sort(byDateDesc)
+    results.sort(byDateAsc)
     .filter(filterOldEntry)
     .filter(el => regex.test(el.name))
     .map(el => el.name)
@@ -132,8 +132,8 @@ function processResponse(res) {
   }
 }
 
-function byDateDesc(a, b) {
-  return  a.last_updated < b.last_updated
+function byDateAsc(a, b) {
+  return  a.last_updated > b.last_updated
 }
 
 function filterOldEntry(entry) {

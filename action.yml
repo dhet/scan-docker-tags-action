@@ -25,9 +25,9 @@ inputs:
     required: false
     default: https://hub.docker.com
   output-delimiter:
-    description: The delimiter to use for the output. Defaults to " " (space)
+    description: The delimiter to use for the output. Defaults to ","
     required: false
-    default: ' '
+    default: ','
 outputs:
   tags:
     description: A list of all image tags that have changed in the specified time frame

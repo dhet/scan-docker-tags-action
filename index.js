@@ -64,7 +64,7 @@ function processResponse(res) {
 }
 
 function byDateAsc(a, b) {
-  return  a.last_updated > b.last_updated
+  return new Date(a.last_updated) - new Date(b.last_updated)
 }
 
 function filterOldEntry(entry) {

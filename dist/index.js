@@ -71,15 +71,14 @@ const fetch = __webpack_require__(454)
 const core = __webpack_require__(470);
 
 
-let repoUrl, image, regex, maxAgeMinutes, outputDelimiter, username, password
+let repoUrl, image, regex, maxAgeMinutes, username, password
 try {
-  repoUrl = core.getInput("repo-url")
-  image = core.getInput("image")
-  regex = new RegExp(core.getInput("tag-regex"))
+  repoUrl       = core.getInput("repo-url")
+  image         = core.getInput("image")
+  regex         = new RegExp(core.getInput("tag-regex"))
   maxAgeMinutes = parseInt(core.getInput("max-age-minutes"))
-  outputDelimiter = core.getInput("output-delimiter")
-  username = core.getInput("username")
-  password = core.getInput("password")
+  username      = core.getInput("username")
+  password      = core.getInput("password")
 } catch (err) {
   const msg = "Failed to initialize action: " + err.message
   core.setFailed(msg)
@@ -110,7 +109,7 @@ fetch(`${repoUrl}/v2/users/login/`, {
     .filter(filterOldEntry)
     .filter(el => regex.test(el.name))
     .map(el => el.name)
-    .join(outputDelimiter)
+    .join(",")
 
   core.setOutput("tags", tags)
 })
@@ -133,11 +132,11 @@ function processResponse(res) {
 }
 
 function byDateAsc(a, b) {
-  return  a.last_updated > b.last_updated
+  return new Date(a.last_updated) - new Date(b.last_updated)
 }
 
 function filterOldEntry(entry) {
-  const now = new Date()
+  const now       = new Date()
   const entryDate = new Date(entry.last_updated)
   return (now - entryDate) < maxAgeMinutes * 60 * 1000
 }

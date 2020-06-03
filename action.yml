@@ -4,6 +4,9 @@ inputs:
   image:
     description: The Docker image to scan (sans tag), e.g. "mhart/alpine-node"
     required: true
+  max-age-minutes:
+    description: The maximum age of tags in minutes. Older tags are discarded
+    required: true
   username:
     description: The username used to authenticate against the Docker repository
     required: true
@@ -16,24 +19,18 @@ inputs:
       semver, `latest` matches only the "latest" tag
     required: false
     default: '.*'
-  max-age-minutes:
-    description: The maximum age of tags in minutes. Older tags are discarded. Defaults to 30 minutes
-    required: false
-    default: '30'
   repo-url:
     description: The URL of the Docker registry. Defaults to Dockerhub (https://hub.docker.com)
     required: false
     default: https://hub.docker.com
-  output-delimiter:
-    description: The delimiter to use for the output. Defaults to ","
-    required: false
-    default: ','
 outputs:
   tags:
-    description: A list of all image tags that have changed in the specified time frame
+    description: >  
+      A comma-separated list of all image tags that have changed in the specified time frame, sorted by date in 
+      ascending order (oldest first)
 runs:
   using: node12
   main: dist/index.js
 branding:
-  icon: rotate-cw
-  color: yellow
+  icon: refresh-cw
+  color: blue

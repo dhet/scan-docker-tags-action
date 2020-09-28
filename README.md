@@ -1,11 +1,11 @@
 # Scan Docker Tags Action
 
-Scan a Docker image repository for recently-updated tags. This is helpful e.g. when your project relies on a certain Docker image and you want to rebuild it every time the base image is updated.
+Scan a Docker repository for recently-updated tags. This allows you to trigger builds whenever a given Docker image is updated. 
 
 
 ## Example
 
-This example workflow scans an image every 15 minutes and prints all tags that were updated since the last run.
+This example workflow scans a Docker repository every 15 minutes and prints all tags that were updated since the last run.
 
 ```yml
 name: Scan Docker Repo
@@ -40,7 +40,7 @@ Recent updates: slim-14.4,slim-14,slim,latest
 
 |Parameter|Description
 |---|---
-|`image`|The Docker image to scan (sans tag), e.g. "mhart/alpine-node"
+|`image`|The image repository to scan (sans tag), e.g. "mhart/alpine-node"
 |`max-age-minutes`|The maximum age of tags to consider. Older tags are discarded. E.g. `30` for 30 minutes
 |`username`|The username used to authenticate against the Docker repository
 |`password`|The password used to authenticate against the Docker repository
@@ -49,7 +49,7 @@ Recent updates: slim-14.4,slim-14,slim,latest
 ## Optional Inputs
 |Parameter|Description|Default
 |---|---|---
-|`tag-regex`|A regular expression for filtering tags. Backslashes need to be escaped. E.g. `\\d+\\.\\d+$` matches semver, `latest` matches only the "latest" tag.|`.*`
+|`tag-regex`|A regular expression for filtering tags. Backslashes need to be escaped. E.g. `\\d+\\.\\d+$` matches `0.10`, `1.2`, `1.12.123`, etc.; `latest` matches only the "latest" tag.|`.*`
 |`repo-url`|The URL of the Docker registry. Defaults to Dockerhub.|`https://hub.docker.com`
 
 

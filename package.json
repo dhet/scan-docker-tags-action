@@ -1,6 +1,6 @@
 {
   "name": "scan-docker-tags-action",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "A GitHub action for scanning Docker repositories for recently-updated tags",
   "main": "index.js",
   "author": "",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.2.4",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.22.3",

@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Scan Docker Repository
-        uses: dhet/scan-docker-tags-action@v1.0
+        uses: dhet/scan-docker-tags-action@v1.0.1
         with:
           image: mhart/alpine-node
           max-age-minutes: 15

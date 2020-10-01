@@ -42,13 +42,13 @@ Recent updates: slim-14.4,slim-14,slim,latest
 |---|---
 |`image`|The image repository to scan (sans tag), e.g. "mhart/alpine-node"
 |`max-age-minutes`|The maximum age of tags to consider. Older tags are discarded. E.g. `30` for 30 minutes
-|`username`|The username used to authenticate against the Docker repository
-|`password`|The password used to authenticate against the Docker repository
 
 
 ## Optional Inputs
 |Parameter|Description|Default
 |---|---|---
+|`username`|The username for the Docker repository|
+|`password`|The password for the Docker repository|
 |`tag-regex`|A regular expression for filtering tags. Backslashes need to be escaped. E.g. `\\d+\\.\\d+$` matches `0.10`, `1.2`, `1.12.123`, etc.; `latest` matches only the "latest" tag.|`.*`
 |`repo-url`|The URL of the Docker registry. Defaults to Dockerhub.|`https://hub.docker.com`
 

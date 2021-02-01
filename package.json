@@ -9,7 +9,7 @@
     "build": "ncc build index.js -o dist"
   },
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.6",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {

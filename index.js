@@ -18,44 +18,49 @@ try {
   process.exit(1)
 }
 
-fetch(`${repoUrl}/v2/users/login/`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ username, password })
-})
-.then(processResponse)
-.then(({ token }) => {
-  return fetch(`${repoUrl}/v2/repositories/${image}/tags?page_size=100`, {
-    headers: {
-      "authorization": token
-    }
+
+maybeAuthenticate()
+  .then(({ token }) => {
+    const headers = token ? { "authorization": token } : {}
+    return fetch(`${repoUrl}/v2/repositories/${image}/tags?page_size=100`, headers)
   })
-})
-.then(processResponse)
-.then(({ results }) => {
-  const tags = 
-    results.sort(byDateAsc)
-    .filter(filterOldEntry)
-    .filter(el => regex.test(el.name))
-    .map(el => el.name)
-    .join(",")
+  .then(processResponse)
+  .then(({ results }) => {
+    const tags =
+      results.sort(byDateAsc)
+        .filter(filterOldEntry)
+        .filter(el => regex.test(el.name))
+        .map(el => el.name)
+        .join(",")
 
-  core.setOutput("tags", tags)
-})
-.catch((err) => {
-  const msg = "Failed to scan Docker repository: " + err.message
-  core.setFailed(msg)
-  console.error(msg)
-  console.error(err)
-  process.exit(1)
-})
+    core.setOutput("tags", tags)
+  })
+  .catch((err) => {
+    const msg = "Failed to scan Docker repository: " + err.message
+    core.setFailed(msg)
+    console.error(msg)
+    console.error(err)
+    process.exit(1)
+  })
 
+
+function maybeAuthenticate() {
+  return (!username || !password) ? Promise.resolve({ token: undefined }) : retrieveToken()
+}
+
+function retrieveToken() {
+  return fetch(`${repoUrl}/v2/users/login/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ username, password })
+  }).then(processResponse)
+}
 
 
 function processResponse(res) {
-  if(res.status < 400) {
+  if (res.status < 400) {
     return res.json()
   } else {
     return Promise.reject(new Error(`Response from server: '${res.statusText}' (${res.status}) for URL ${res.url}`))
